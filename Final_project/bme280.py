@@ -23,6 +23,7 @@ import time
 from ctypes import c_short
 from ctypes import c_byte
 from ctypes import c_ubyte
+import DAN
 
 DEVICE = 0x76 # Default device I2C address
 
@@ -156,6 +157,19 @@ def readBME280All(addr=DEVICE):
 
   return temperature/100.0,pressure/100.0,humidity
 
+
+##########################
+#Set IoTtalk
+ServerURL = 'https://5.iottalk.tw/'      #with non-secure connection
+#ServerURL = 'https://DomainName' #with SSL connection
+Reg_addr = 'bme28051536564778545355144543' #if None, Reg_addr = MAC address
+
+DAN.profile['dm_name']='bme280'
+DAN.profile['df_list']=['AtPressure', 'Humidity', 'Temperature']
+#DAN.profile['d_name']= 'Assign a Device Name' 
+DAN.device_registration_with_retry(ServerURL, Reg_addr)
+########################
+
 def main():
   
   (chip_id, chip_version) = readBME280ID()
@@ -165,8 +179,11 @@ def main():
     temperature,pressure,humidity = readBME280All()
 
     print "Temperature : ", temperature, "C"
+    DAN.push('Temperature', temperature)
     print "Pressure : ", pressure, "hPa"
+    DAN.push('AtPressure', pressure)
     print "Humidity : ", humidity, "%"
+    DAN.push('Humidity', humidity)
     print "#################"
     time.sleep(0.2)
 

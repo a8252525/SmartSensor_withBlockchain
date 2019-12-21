@@ -32,14 +32,15 @@ void loop(){
   // Chris Nafis (c) 2012
   dustDensity = 0.17 * calcVoltage - 0.1;
   
-  Serial.print("Raw Signal Value (0-1023): ");
-  Serial.print(voMeasured);
+  //Serial.print("Raw Signal Value (0-1023): ");
+  //Serial.print(voMeasured);
   
-  Serial.print(" - Voltage: ");
-  Serial.print(calcVoltage);
+  //Serial.print(" - Voltage: ");
+  //Serial.print(calcVoltage);
   
-  Serial.print(" - Dust Density: ");
-  Serial.print(dustDensity * 1000); // 這裡將數值呈現改成較常用的單位( ug/m3 )
-  Serial.println(" ug/m3 ");
+  //Serial.print(" - Dust Density: ");
+  Serial.print(dustDensity * 1000 ); // 這裡將數值呈現改成較常用的單位( ug/m3 )
+  Serial.print("\n");
+  //Serial.println(" ug/m3 ");
   delay(1000);
 }
